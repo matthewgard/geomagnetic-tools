@@ -1,8 +1,8 @@
 function [X,Y] = hdz2xyz(H,D)
 % hdz2xyz(H,D) computes the North (X) and East (Y) components of the 
 % magnetic field given xy data. Z is not necessary for the calculation.
-%   North X = Hcos(D)
-%   East Y = Hsin(D)
+%   North X = H*cos(D)
+%   East  Y = H*sin(D)
 % 
 %   [X,Y] = hdz2xyz(H,D)
 %
@@ -28,7 +28,6 @@ end
 if (~isnumeric(D))
     error('Input variable D is not numeric')
 end
-
 if ~isequal(size(H),size(D))
     error('Input variables H and D are not the same size')
 end

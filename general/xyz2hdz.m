@@ -2,7 +2,7 @@ function [H,D] = xyz2hdz(X,Y)
 % xyz2hdz(X,Y) computes the Horizontal Intensity (H) and Declination (D)
 % components of the magnetic field given xy data. Z is not necessary for
 % the calculation.
-%   Horizontal H = sqrt(x2+y2)
+%   Horizontal  H = sqrt(x2+y2)
 %   Declination D = tan-1(Y/X)
 % 
 %   [H,D] = xyz2hdz(X,Y)
