@@ -1,7 +1,7 @@
 function sshc = data2sh(theta,phi,r,a,N,Br,Bt,Bp,varargin)
 % data2sh(theta,phi,r,a,N,Br,Bt,Bp) computes the schmidt semi-normalized
 % coefficients given a set of colatitude, longitude, radius and geomagnetic
-% field values using least squares (mldivide)
+% field values using least squares (lsqr)
 %
 % sshc = data2sh(theta,phi,r,a,N,Br,Bt,Bp)
 %
@@ -17,7 +17,7 @@ function sshc = data2sh(theta,phi,r,a,N,Br,Bt,Bp,varargin)
 %     -Bt:    N component of the magnetic field (nT)
 %     -Bp:    E component of the magnetic field (nT)
 %   Optional inputs:
-%     -tol:   Tolerance for least squares solution (default 1e-10)
+%     -tol:   Tolerance for least squares solution (default 1e-6)
 %             Must be a positive number
 %     -iter:  Maximum iterations for least squares solution (default 1000)
 %             Must be a positive integer
@@ -181,8 +181,8 @@ fprintf('\n')
 % mldivide is real slow for higher sizes
 % sshc = terms\mag_data;
 % Decided to use lsqr with customisable tol and iter settings 
-fprintf('Seeking least squares solution using lsqr with tolerance: %.2d and max iteration: %.0d\n',[tol,iter])
-sshc = lsqr(terms,mag_data,tol,iter);
+[sshc,flag,relres,iter,resvec,lsvec] = lsqr(terms,mag_data,tol,iter);
+fprintf('lsqr converged at iteration %d to a solution with relative residual %e and least-squares residual %e\n',[iter,relres,lsvec(end)])
 
 % Pad result with zeros if subset was selected
 sshc = [zeros([(minN)^2 1]);sshc];
